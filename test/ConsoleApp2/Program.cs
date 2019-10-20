@@ -1,5 +1,5 @@
 ﻿using System;
-using TestUsingAssembly;
+//using TestUsingAssembly;
 
 namespace ConsoleApp2
 {
@@ -7,10 +7,10 @@ namespace ConsoleApp2
     {
         static void Main(string[] args)
         {
-            var wa = new WithAutowired();
-            Console.WriteLine(wa.Logger1.Name);
-            Console.WriteLine(wa.Logger2.Name);
-            Console.WriteLine(wa.Logger3.Name);
+            //var wa = new WithAutowired();
+            //Console.WriteLine(wa.Logger1.Name);
+            //Console.WriteLine(wa.Logger2.Name);
+            //Console.WriteLine(wa.Logger3.Name);
         }
     }
 }

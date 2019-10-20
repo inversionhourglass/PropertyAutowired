@@ -26,7 +26,7 @@ namespace PropertyAutowired.Fody
             var ctors = MakeSureInstanceCtorAndGet(typeDef);
             foreach (var ctor in ctors)
             {
-                WiredProperty(ctor, props);
+                WiredProperty(ctor, props, true);
                 ctor.Body.Optimize();
             }
         }
@@ -36,16 +36,16 @@ namespace PropertyAutowired.Fody
             if (props.Count == 0) return;
 
             var ctor = MakeSureStaticCtorAndGet(typeDef);
-            WiredProperty(ctor, props);
+            WiredProperty(ctor, props, false);
             ctor.Body.Optimize();
         }
 
-        private void WiredProperty(MethodDefinition ctor, List<AutowiredProperties> props)
+        private void WiredProperty(MethodDefinition ctor, List<AutowiredProperties> props, bool isInstance)
         {
             var ins = new Collection<Instruction>();
             foreach (var prop in props)
             {
-                ins.Add(Instruction.Create(OpCodes.Ldarg_0));
+                if (isInstance) ins.Add(Instruction.Create(OpCodes.Ldarg_0));
                 var attr = ctor.Body.CreateVariable(prop.Attribute.AttributeType);
                 ins.AddRange(LoadAttributeArgumentIns(prop.Attribute.ConstructorArguments));
                 ins.Add(Instruction.Create(OpCodes.Newobj, prop.Attribute.Constructor));
@@ -61,7 +61,8 @@ namespace PropertyAutowired.Fody
                 ins.Add(Instruction.Create(OpCodes.Ldloc, attr));
                 ins.Add(Instruction.Create(OpCodes.Callvirt, prop.Attribute.AttributeType.Resolve().RecursionImportMethod(ModuleDefinition, "GetPropertyValue")));
                 ins.Add(Instruction.Create(OpCodes.Castclass, prop.PropertyDef.GetMethod.ReturnType));
-                ins.Add(Instruction.Create(OpCodes.Stfld, ctor.DeclaringType.Fields.First(fd => fd.Name == $"<{prop.PropertyDef.Name}>k__BackingField")));
+                var propSetOpCode = isInstance ? OpCodes.Stfld : OpCodes.Stsfld;
+                ins.Add(Instruction.Create(propSetOpCode, ctor.DeclaringType.Fields.First(fd => fd.Name == $"<{prop.PropertyDef.Name}>k__BackingField")));
             }
             ctor.Body.Instructions.InsertRange(0, ins);
         }

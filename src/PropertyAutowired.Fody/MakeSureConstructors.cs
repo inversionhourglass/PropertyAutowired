@@ -36,7 +36,8 @@ namespace PropertyAutowired.Fody
             var staticCtor = typeDef.Methods.FirstOrDefault(md => md.IsConstructor && md.IsStatic);
             if (staticCtor == null)
             {
-                typeDef.Methods.Add(GenerateStaticCtor(typeDef));
+                staticCtor = GenerateStaticCtor(typeDef);
+                typeDef.Methods.Add(staticCtor);
             }
 
             return staticCtor;
@@ -45,10 +46,8 @@ namespace PropertyAutowired.Fody
         private MethodDefinition GenerateStaticCtor(TypeDefinition typeDef)
         {
             var methodAttributes = MethodAttributes.Private | MethodAttributes.HideBySig | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName | MethodAttributes.Static;
-            var staticCtor = new MethodDefinition(".ctor", methodAttributes, TypeSystem.VoidReference);
-            staticCtor.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
-            var methodReference = new MethodReference(".ctor", TypeSystem.VoidReference, typeDef.BaseType) { HasThis = true };
-            staticCtor.Body.Instructions.Add(Instruction.Create(OpCodes.Call, methodReference));
+            var staticCtor = new MethodDefinition(".cctor", methodAttributes, TypeSystem.VoidReference);
+            staticCtor.Body.Instructions.Add(Instruction.Create(OpCodes.Nop));
             staticCtor.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
             return staticCtor;
         }
