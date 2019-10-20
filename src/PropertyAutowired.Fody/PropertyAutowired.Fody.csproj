@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="PropertyAutowired.Fody.csproj.DotSettings" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FodyHelpers" Version="6.0.0" />
   </ItemGroup>
 

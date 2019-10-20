@@ -5,7 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\PropertyAutowired.Fody\PropertyAutowired.Fody.csproj" />
+    <Compile Remove="CtorCall.cs" />
+    <Compile Remove="NonZeroConstructor.cs" />
+    <Compile Remove="TestClass.cs" />
+    <Compile Remove="WhitoutAutowired.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Test.exe" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TestImplAssembly\TestImplAssembly.csproj" />
   </ItemGroup>
 

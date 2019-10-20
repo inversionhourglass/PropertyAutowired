@@ -45,7 +45,6 @@ namespace TestUsingAssembly
 
         public Type Type { get; set; } = typeof(C);
 
-        [TestAutowired(typeof(B))]
         public Type Type2 { get; set; } = C.Type;
 
         public B Enum { get; set; } = B.K;
@@ -63,6 +62,11 @@ namespace TestUsingAssembly
 
     public class C
     {
+        static C()
+        {
+            Console.WriteLine(123);
+        }
+
         public static Type Type = typeof(C);
     }
 }

@@ -11,23 +11,23 @@ namespace ConsoleApp1
             var weaver = new ModuleWeaver();
             weaver.ExecuteTestRun("TestUsingAssembly.dll");
 
+            //var wa = new WithAutowired();
+            //Console.WriteLine(wa.Logger.Name);
+
 
             Console.ReadLine();
         }
     }
 
-    public interface IA
+    abstract class A
     {
-        string Name { get => this.GetType().Name; }
+        public abstract Type X { get; set; }
     }
 
-    public interface IB
+    class B : A
     {
-        int Code { get => this.GetType().GetHashCode(); }
-    }
+        public override Type X { get; set; }
 
-    public class The : IA, IB
-    {
-        string IA.Name { get => "wa"; }
+        public virtual Type Y { get; set; }
     }
 }

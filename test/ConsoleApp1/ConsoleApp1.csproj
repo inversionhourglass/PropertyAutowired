@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\PropertyAutowired.Fody\PropertyAutowired.Fody.csproj" />
+    <ProjectReference Include="..\..\src\PropertyAutowired\PropertyAutowired.csproj" />
     <ProjectReference Include="..\TestUsingAssembly\TestUsingAssembly.csproj" />
   </ItemGroup>
 
