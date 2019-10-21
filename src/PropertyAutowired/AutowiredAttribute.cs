@@ -8,7 +8,7 @@ namespace PropertyAutowired
         /// <summary>
         /// The type which declared property
         /// </summary>
-        public Type TargetType { get; set; }
+        public Type DeclaringType { get; set; }
 
         public abstract object GetPropertyValue();
     }

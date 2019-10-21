@@ -52,7 +52,7 @@ namespace PropertyAutowired.Fody
                 ins.Add(Instruction.Create(OpCodes.Stloc, attr));
                 ins.Add(Instruction.Create(OpCodes.Ldloc, attr));
                 ins.AddRange(LoadValueOnStack(_sysTypeRef, ctor.DeclaringType));
-                ins.Add(Instruction.Create(OpCodes.Callvirt, prop.Attribute.AttributeType.Resolve().RecursionImportPropertySet(ModuleDefinition, "TargetType")));
+                ins.Add(Instruction.Create(OpCodes.Callvirt, prop.Attribute.AttributeType.Resolve().RecursionImportPropertySet(ModuleDefinition, "DeclaringType")));
                 ins.Add(Instruction.Create(OpCodes.Nop));
                 if (prop.Attribute.HasProperties)
                 {

@@ -58,7 +58,7 @@ namespace TestImplAssembly
             Console.WriteLine($"\t{nameof(Enum)}: {Enum}");
             Console.WriteLine($"\t{nameof(Array)}: {string.Join(",", Array)}");
             Console.WriteLine("}");
-            return LogFactory.GetLogger(TargetType.FullName);
+            return LogFactory.GetLogger(DeclaringType.FullName);
         }
     }
 }
