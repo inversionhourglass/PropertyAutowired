@@ -6,6 +6,11 @@ namespace PropertyAutowired.Fody
 {
     internal static class TypeExtensions
     {
+        public static bool Is(this TypeReference typeRef, string fullName)
+        {
+            return typeRef.Resolve().FullName == fullName;
+        }
+
         public static bool DerivesFrom(this TypeReference typeRef, string baseClass)
         {
             do
@@ -80,6 +85,11 @@ namespace PropertyAutowired.Fody
             }
         }
 
+        public static MethodReference RecursionImportPropertySet(this CustomAttribute attribute, ModuleDefinition moduleDef, string propertyName)
+        {
+            return RecursionImportPropertySet(attribute.AttributeType.Resolve(), moduleDef, propertyName);
+        }
+
         public static MethodReference RecursionImportPropertySet(this TypeDefinition typeDef, ModuleDefinition moduleDef, string propertyName)
         {
             var propertyDef = typeDef.Properties.FirstOrDefault(pd => pd.Name == propertyName);
@@ -88,6 +98,11 @@ namespace PropertyAutowired.Fody
             var baseTypeDef = typeDef.BaseType.Resolve();
             if (baseTypeDef.FullName == typeof(object).FullName) throw new PropertyAutowiredException($"can not find property({propertyName}) from {typeDef.FullName}");
             return RecursionImportPropertySet(baseTypeDef, moduleDef, propertyName);
+        }
+
+        public static MethodReference RecursionImportMethod(this CustomAttribute attribute, ModuleDefinition moduleDef, string methodName)
+        {
+            return RecursionImportMethod(attribute.AttributeType.Resolve(), moduleDef, methodName);
         }
 
         public static MethodReference RecursionImportMethod(this TypeDefinition typeDef, ModuleDefinition moduleDef, string methodName)
@@ -105,6 +120,14 @@ namespace PropertyAutowired.Fody
             var variable = new VariableDefinition(variableTypeReference);
             body.Variables.Add(variable);
             return variable;
+        }
+
+        public static System.Reflection.BindingFlags GetBindingFlags(this PropertyDefinition propertyDef)
+        {
+            var flags = System.Reflection.BindingFlags.Default;
+            flags |= propertyDef.SetMethod.IsPublic ? System.Reflection.BindingFlags.Public : System.Reflection.BindingFlags.NonPublic;
+            flags |= propertyDef.HasThis ? System.Reflection.BindingFlags.Instance : System.Reflection.BindingFlags.Static;
+            return flags;
         }
     }
 }

@@ -52,14 +52,14 @@ namespace PropertyAutowired.Fody
                 ins.Add(Instruction.Create(OpCodes.Stloc, attr));
                 ins.Add(Instruction.Create(OpCodes.Ldloc, attr));
                 ins.AddRange(LoadValueOnStack(_sysTypeRef, ctor.DeclaringType));
-                ins.Add(Instruction.Create(OpCodes.Callvirt, prop.Attribute.AttributeType.Resolve().RecursionImportPropertySet(ModuleDefinition, "DeclaringType")));
+                ins.Add(Instruction.Create(OpCodes.Callvirt, prop.Attribute.RecursionImportPropertySet(ModuleDefinition, "DeclaringType")));
                 ins.Add(Instruction.Create(OpCodes.Nop));
                 if (prop.Attribute.HasProperties)
                 {
                     ins.AddRange(LoadAttributePropertyIns(prop.Attribute.AttributeType.Resolve(), prop.Attribute.Properties, attr));
                 }
                 ins.Add(Instruction.Create(OpCodes.Ldloc, attr));
-                ins.Add(Instruction.Create(OpCodes.Callvirt, prop.Attribute.AttributeType.Resolve().RecursionImportMethod(ModuleDefinition, "GetPropertyValue")));
+                ins.Add(Instruction.Create(OpCodes.Callvirt, prop.Attribute.RecursionImportMethod(ModuleDefinition, "GetPropertyValue")));
                 ins.Add(Instruction.Create(OpCodes.Castclass, prop.PropertyDef.GetMethod.ReturnType));
                 var propSetOpCode = isInstance ? OpCodes.Stfld : OpCodes.Stsfld;
                 ins.Add(Instruction.Create(propSetOpCode, ctor.DeclaringType.Fields.First(fd => fd.Name == $"<{prop.PropertyDef.Name}>k__BackingField")));

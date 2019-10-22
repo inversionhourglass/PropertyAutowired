@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Mono.Collections.Generic;
 
 namespace PropertyAutowired.Fody
@@ -19,6 +20,24 @@ namespace PropertyAutowired.Fody
             {
                 collection.Add(item);
             }
+        }
+
+        public static bool AddRangeUnique<TKey, TValue, TItem>(this Dictionary<TKey, TValue> dictionary, IList<TItem> items, Func<TItem, KeyValuePair<TKey, TValue>> func, out TItem duplicateItem)
+        {
+            duplicateItem = default;
+            if (items == null) return true;
+
+            foreach (var item in items)
+            {
+                var kvp = func(item);
+                if (dictionary.ContainsKey(kvp.Key))
+                {
+                    duplicateItem = item;
+                    return false;
+                }
+                dictionary.Add(kvp.Key, kvp.Value);
+            }
+            return true;
         }
     }
 }
