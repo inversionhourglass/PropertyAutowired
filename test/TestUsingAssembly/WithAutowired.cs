@@ -1,10 +1,16 @@
-﻿using TestImplAssembly;
+﻿using System;
+using TestImplAssembly;
 using TestImplAssembly.Logging;
 
 namespace TestUsingAssembly
 {
     public class WithAutowired
     {
+        public WithAutowired()
+        {
+            Console.WriteLine($@"Arr: {string.Join(", ", Arr)}");
+        }
+
         static WithAutowired() { }
 
         public string Name { get; set; }

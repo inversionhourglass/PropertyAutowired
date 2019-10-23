@@ -1,12 +1,28 @@
 ﻿using PropertyAutowired;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using TestImplAssembly;
+using TestImplAssembly.Logging;
 
 namespace TestUsingAssembly
 {
-    class TypedTModel1
+    public class TypedTModel1
     {
+        public TypedTModel1()
+        {
+            Console.WriteLine($@"
+{nameof(TypedTModel1)}{{
+    A: {A},
+    B: {B},
+    C: {C},
+    D: {D},
+    E: {E},
+    F: {F},
+    G: {G},
+    Logger: {Logger.Name},
+    DLogger: {DLogger.Name}
+}}");
+        }
+
         public static int A { get; set; }
 
         public long B { get; set; }
@@ -21,10 +37,26 @@ namespace TestUsingAssembly
 
         [IgnoreAutowired]
         private static double G { get; set; }
+
+        public ILogger Logger { get; set; }
+
+        public static DefaultLogger DLogger { get; set; }
     }
 
-    class TypedTModel2
+    public class TypedTModel2
     {
+        public TypedTModel2()
+        {
+            Console.WriteLine($@"
+{nameof(TypedTModel1)}{{
+    A: {A},
+    B: {B},
+    C: {C},
+    D: {D},
+    Func: {Func(typeof(MemoryExtensions))},
+    Value: item1: {Value.Item1}, item2: {Value.Item2}, item3: {Value.Item3}, item4: {Value.Item4}
+}}");
+        }
         public static int A { get; set; }
 
         [IgnoreAutowired]
@@ -33,11 +65,26 @@ namespace TestUsingAssembly
         internal static float C { get; set; }
 
         protected static double D { get; set; }
+
+        public Func<Type, string> Func { get; set; }
+
+        [GenericAutowired]
+        public (int, string, float, Guid) Value { get; set; }
     }
 
     [IgnoreAutowired]
-    class TypedTModel3
+    public class TypedTModel3
     {
+        public TypedTModel3()
+        {
+            Console.WriteLine($@"
+{nameof(TypedTModel1)}{{
+    A: {A},
+    B: {B},
+    C: {C},
+    D: {D}
+}}");
+        }
         public int A { get; set; }
 
         public long B { get; set; }

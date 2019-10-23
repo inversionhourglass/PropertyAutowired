@@ -10,15 +10,15 @@ namespace PropertyAutowired.Fody
         {
             _autowiredTypes = new List<AutowiredType>();
             var attrs = ModuleDefinition.CustomAttributes.Concat(ModuleDefinition.Assembly.CustomAttributes);
-            var autowiredTypes = new Dictionary<MetadataToken, TypedAutowiredDecorator>();
+            var autowiredTypes = new Dictionary<string, TypedAutowiredDecorator>();
             foreach (var attr in attrs)
             {
                 if (!attr.AttributeType.DerivesFrom(Consts.TypedAutowiredAttribute)) continue;
                 // todo: log
                 if (!attr.HasProperties) continue;
                 var decorator = new TypedAutowiredDecorator(attr);
-                if (!autowiredTypes.AddRangeUnique(decorator.TargetPropertyTypes, t => new KeyValuePair<MetadataToken, TypedAutowiredDecorator>(t.MetadataToken, decorator), out var duplicateType))
-                    throw new PropertyAutowiredException($"duplicate {Consts.TypedAutowiredAttribute}.{Consts.TypedAutowiredAttribute_TargetPropertyTypes} found: {duplicateType.FullName}");
+                if (!autowiredTypes.AddRangeUnique(decorator.TargetPropertyTypes, t => new KeyValuePair<string, TypedAutowiredDecorator>(t, decorator), out var duplicateType))
+                    throw new PropertyAutowiredException($"duplicate {Consts.TypedAutowiredAttribute}.{Consts.TypedAutowiredAttribute_TargetPropertyTypes} found: {duplicateType}");
             }
             // todo: 支持array以及泛型
             foreach (var type in ModuleDefinition.Types)
@@ -31,20 +31,20 @@ namespace PropertyAutowired.Fody
                 {
                     if ((prop.GetMethod.Attributes & MethodAttributes.Abstract) != 0) continue;
                     TypedAutowiredDecorator decorator = null;
-                    var isTypedAutowired = !typeIgnored && autowiredTypes.TryGetValue(prop.PropertyType.Resolve().MetadataToken, out decorator);
+                    var isTypedAutowired = !typeIgnored && autowiredTypes.TryGetValue(prop.PropertyType.FullName, out decorator);
                     if (isTypedAutowired)
                     {
                         var propBindingFlags = prop.GetBindingFlags();
                         var flagsCheck = false;
                         foreach (var flags in decorator.PropertyFlags)
                         {
-                            flagsCheck |= (propBindingFlags & flags) == flags;
+                            flagsCheck |= (propBindingFlags & flags) == propBindingFlags;
                             if (flagsCheck) break;
                         }
                         isTypedAutowired &= flagsCheck;
                         if (decorator.ExceptedDeclaringTypes != null)
                         {
-                            isTypedAutowired &= !decorator.ExceptedDeclaringTypes.Contains(type);
+                            isTypedAutowired &= !decorator.ExceptedDeclaringTypes.Contains(type.FullName);
                         }
                     }
                     CustomAttribute autoAttr = null;

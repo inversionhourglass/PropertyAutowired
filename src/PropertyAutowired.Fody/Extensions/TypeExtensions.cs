@@ -125,7 +125,7 @@ namespace PropertyAutowired.Fody
         public static System.Reflection.BindingFlags GetBindingFlags(this PropertyDefinition propertyDef)
         {
             var flags = System.Reflection.BindingFlags.Default;
-            flags |= propertyDef.SetMethod.IsPublic ? System.Reflection.BindingFlags.Public : System.Reflection.BindingFlags.NonPublic;
+            flags |= propertyDef.GetMethod.IsPublic ? System.Reflection.BindingFlags.Public : System.Reflection.BindingFlags.NonPublic;
             flags |= propertyDef.HasThis ? System.Reflection.BindingFlags.Instance : System.Reflection.BindingFlags.Static;
             return flags;
         }

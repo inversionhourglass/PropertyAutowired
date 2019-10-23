@@ -60,7 +60,8 @@ namespace PropertyAutowired.Fody
                 }
                 ins.Add(Instruction.Create(OpCodes.Ldloc, attr));
                 ins.Add(Instruction.Create(OpCodes.Callvirt, prop.Attribute.RecursionImportMethod(ModuleDefinition, "GetPropertyValue")));
-                ins.Add(Instruction.Create(OpCodes.Castclass, prop.PropertyDef.GetMethod.ReturnType));
+                var convertOpCode = prop.PropertyDef.GetMethod.ReturnType.IsValueType ? OpCodes.Unbox_Any : OpCodes.Castclass;
+                ins.Add(Instruction.Create(convertOpCode, prop.PropertyDef.GetMethod.ReturnType));
                 var propSetOpCode = isInstance ? OpCodes.Stfld : OpCodes.Stsfld;
                 ins.Add(Instruction.Create(propSetOpCode, ctor.DeclaringType.Fields.First(fd => fd.Name == $"<{prop.PropertyDef.Name}>k__BackingField")));
             }

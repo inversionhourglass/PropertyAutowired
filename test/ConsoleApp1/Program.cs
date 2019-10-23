@@ -8,15 +8,31 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
+            //var value = (ValueTuple<int, string, float, Guid>)GetTuple();
+            //var int4 = (int)GetInt();
+            //var guid = (Guid)GetGuid();
+            //Console.WriteLine("item1: " + value.Item1);
+            //Console.WriteLine("item2: " + value.Item2);
+            //Console.WriteLine("item3: " + value.Item3);
+            //Console.WriteLine("item4: " + value.Item4);
             var weaver = new ModuleWeaver();
             weaver.ExecuteTestRun("TestUsingAssembly.dll");
 
             //var wa = new WithAutowired();
             //Console.WriteLine(wa.Logger.Name);
 
-
+            Console.WriteLine("Press entry to continue...");
             Console.ReadLine();
         }
+
+        static object GetTuple()
+        {
+            return (1, "a", 3.14f, Guid.NewGuid());
+        }
+
+        static object GetInt() => 1;
+
+        static object GetGuid() => Guid.NewGuid();
     }
 
     abstract class A
