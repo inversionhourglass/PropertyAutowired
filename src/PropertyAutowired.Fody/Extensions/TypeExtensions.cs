@@ -122,11 +122,11 @@ namespace PropertyAutowired.Fody
             return variable;
         }
 
-        public static System.Reflection.BindingFlags GetBindingFlags(this PropertyDefinition propertyDef)
+        public static PropFlags GetPropertyFlags(this PropertyDefinition propertyDef)
         {
-            var flags = System.Reflection.BindingFlags.Default;
-            flags |= propertyDef.GetMethod.IsPublic ? System.Reflection.BindingFlags.Public : System.Reflection.BindingFlags.NonPublic;
-            flags |= propertyDef.HasThis ? System.Reflection.BindingFlags.Instance : System.Reflection.BindingFlags.Static;
+            var flags = PropFlags.Default;
+            flags |= propertyDef.GetMethod.IsPublic ? PropFlags.Public : PropFlags.NonPublic;
+            flags |= propertyDef.HasThis ? PropFlags.Instance : PropFlags.Static;
             return flags;
         }
     }

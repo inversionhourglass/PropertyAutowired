@@ -1,6 +1,5 @@
 ﻿using Mono.Cecil;
 using System.Linq;
-using System.Reflection;
 
 namespace PropertyAutowired.Fody
 {
@@ -17,7 +16,7 @@ namespace PropertyAutowired.Fody
                     case Consts.TypedAutowiredAttribute_PropertyFlags:
                         if(prop.Argument.Value != null)
                         {
-                            PropertyFlags = ((CustomAttributeArgument[])prop.Argument.Value).Select(v => (BindingFlags)v.Value).ToArray();
+                            PropertyFlags = ((CustomAttributeArgument[])prop.Argument.Value).Select(v => (PropFlags)v.Value).ToArray();
                         }
                         break;
                     case Consts.TypedAutowiredAttribute_ExceptedDeclaringTypes:
@@ -32,12 +31,11 @@ namespace PropertyAutowired.Fody
                         break;
                 }
             }
-            if (PropertyFlags == null) PropertyFlags = new[] { BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static };
         }
 
         public CustomAttribute Attribute { get; set; }
 
-        public BindingFlags[] PropertyFlags { get; }
+        public PropFlags[] PropertyFlags { get; } = new[] { PropFlags.Public | PropFlags.Instance | PropFlags.Static };
 
         public string[] ExceptedDeclaringTypes { get; }
 

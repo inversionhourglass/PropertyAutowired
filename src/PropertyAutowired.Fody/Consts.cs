@@ -12,6 +12,9 @@
         public const string TypedAutowiredAttribute_ExceptedDeclaringTypes = "ExceptedDeclaringTypes";
         public const string TypedAutowiredAttribute_TargetPropertyTypes = "TargetPropertyTypes";
 
+        public const string Autowired_Position = "Position";
+        public const string Autowired_Order = "Order";
+
         public const string MulticastDelegate = "System.MulticastDelegate";
     }
 }

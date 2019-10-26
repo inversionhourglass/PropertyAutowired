@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 
 namespace PropertyAutowired
 {
@@ -9,7 +8,11 @@ namespace PropertyAutowired
         /// <summary>
         /// TargetProperty.BindingFlags & PropertyFlags == TargetProperty.BindingFlags.(now support public, nonpublic, static, instance)
         /// </summary>
-        public BindingFlags[] PropertyFlags { get; set; }
+        public PropFlags[] PropertyFlags { get; set; }
+
+        public int Order { get; set; }
+
+        public Position Position { get; set; }
 
         /// <summary>
         /// excepted declaring types.
@@ -24,8 +27,17 @@ namespace PropertyAutowired
         /// <summary>
         /// The type which declared property.(value set by framework at compile time)
         /// </summary>
+#if !NETSTANDARD2_1
         [Obsolete("do not set this property, it will set by framework at compile time, you can use it in GetPropertyValue method")]
-        public Type DeclaringType { get; set; }
+#endif
+        public Type DeclaringType
+        {
+            get;
+#if NETSTANDARD2_1
+            [Obsolete("do not set this property, it will set by framework at compile time, you can use it in GetPropertyValue method")]
+#endif
+            set;
+        }
 
         public abstract object GetPropertyValue();
     }

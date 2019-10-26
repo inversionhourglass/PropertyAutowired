@@ -1,7 +1,25 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net462</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId Condition="'$(Configuration)'!='Release'">PropertyAutowired</PackageId>
+    <PackageId Condition="'$(Configuration)'=='Release'">PropertyAutowired.Fody</PackageId>
+    <Version>0.0.1</Version>
+    <Authors>Hourglass Inversion</Authors>
+    <Company>Hourglass Inversion</Company>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Description>initialize instance and static property by property attribute or assembly attribute for some specific property type.</Description>
+    <PackageProjectUrl>https://github.com/inversionhourglass/PropertyAutowired</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/inversionhourglass/PropertyAutowired</RepositoryUrl>
+    <PackageTags>Fody, ILWeaving, Cecil, PropertyAutowired, PropertyInitialize</PackageTags>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\PropertyAutowired.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+
+  <ItemGroup Condition="'$(Configuration)'=='Release'">
+    <PackageReference Include="Fody" Version="6.0.0" PrivateAssets="none" />
+    <PackageReference Include="FodyPackaging" Version="6.0.0" PrivateAssets="All" />
+  </ItemGroup>
 
 </Project>

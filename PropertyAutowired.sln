@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestUsingAssembly", "test\T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestImplAssembly", "test\TestImplAssembly\TestImplAssembly.csproj", "{BBAC61F6-5EA7-4FBF-AFAF-10B8ECF6E031}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp2", "test\ConsoleApp2\ConsoleApp2.csproj", "{FDFB2A5F-0A23-406D-BD79-62D0763E00B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp2", "test\ConsoleApp2\ConsoleApp2.csproj", "{FDFB2A5F-0A23-406D-BD79-62D0763E00B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

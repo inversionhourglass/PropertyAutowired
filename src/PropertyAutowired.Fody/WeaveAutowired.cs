@@ -42,9 +42,14 @@ namespace PropertyAutowired.Fody
 
         private void WiredProperty(MethodDefinition ctor, List<AutowiredProperties> props, bool isInstance)
         {
-            var ins = new Collection<Instruction>();
+            var firstOfAll = new Collection<Instruction>();
+            var afterDefaultInit = new Collection<Instruction>();
+            var afterBaseConstructor = new Collection<Instruction>();
+            var endOfConstructor = new Collection<Instruction>();
             foreach (var prop in props)
             {
+                var ins = prop.Position.GetFromPosition(firstOfAll, afterDefaultInit, afterBaseConstructor, endOfConstructor);
+
                 if (isInstance) ins.Add(Instruction.Create(OpCodes.Ldarg_0));
                 var attr = ctor.Body.CreateVariable(prop.Attribute.AttributeType);
                 ins.AddRange(LoadAttributeArgumentIns(prop.Attribute.ConstructorArguments));
@@ -65,7 +70,13 @@ namespace PropertyAutowired.Fody
                 var propSetOpCode = isInstance ? OpCodes.Stfld : OpCodes.Stsfld;
                 ins.Add(Instruction.Create(propSetOpCode, ctor.DeclaringType.Fields.First(fd => fd.Name == $"<{prop.PropertyDef.Name}>k__BackingField")));
             }
-            ctor.Body.Instructions.InsertRange(0, ins);
+            var baseCtorIdx = ctor.Body.Instructions.FindIndex(0, ins => ins.Operand is MethodReference methodRef && methodRef.Name == ".ctor");
+            var skipNopIdx = ctor.Body.Instructions.FindIndex(baseCtorIdx + 1, ins => ins.OpCode != OpCodes.Nop);
+            baseCtorIdx--; // get ldarg.0 index
+            ctor.Body.Instructions.InsertRange(ctor.Body.Instructions.Count - 2, endOfConstructor);
+            ctor.Body.Instructions.InsertRange(skipNopIdx >= 0 ? skipNopIdx : ctor.Body.Instructions.Count - 2, afterBaseConstructor);
+            ctor.Body.Instructions.InsertRange(baseCtorIdx >= 0 ? baseCtorIdx : ctor.Body.Instructions.Count - 2, afterDefaultInit);
+            ctor.Body.Instructions.InsertRange(0, firstOfAll);
         }
 
         private Collection<Instruction> LoadAttributeArgumentIns(Collection<CustomAttributeArgument> arguments)

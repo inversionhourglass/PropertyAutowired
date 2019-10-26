@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Mono.Cecil.Cil;
 using Mono.Collections.Generic;
 
 namespace PropertyAutowired.Fody
@@ -38,6 +39,33 @@ namespace PropertyAutowired.Fody
                 dictionary.Add(kvp.Key, kvp.Value);
             }
             return true;
+        }
+
+        public static Collection<Instruction> GetFromPosition(this Position position, Collection<Instruction> firstOfAll, Collection<Instruction> afterDefaultInit, Collection<Instruction> afterBaseConstructor, Collection<Instruction> endOfConstructor)
+        {
+            switch (position)
+            {
+                case Position.FirstOfAll:
+                    return firstOfAll;
+                case Position.AfterDefaultInit:
+                    return afterDefaultInit;
+                case Position.AfterBaseConstructor:
+                    return afterBaseConstructor;
+                case Position.EndOfConstructor:
+                    return endOfConstructor;
+                default:
+                    throw new ArgumentException("unknow position: " + position);
+            }
+        }
+
+        public static int FindIndex<T>(this Collection<T> collection, int startIndex, Predicate<T> match)
+        {
+            if (collection == null || collection.Count == 0 || startIndex < 0 || startIndex >= collection.Count) return -1;
+            for (int i = startIndex; i < collection.Count; i++)
+            {
+                if (match(collection[i])) return i;
+            }
+            return -1;
         }
     }
 }

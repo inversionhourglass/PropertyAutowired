@@ -34,7 +34,7 @@ namespace PropertyAutowired.Fody
                     var isTypedAutowired = !typeIgnored && autowiredTypes.TryGetValue(prop.PropertyType.FullName, out decorator);
                     if (isTypedAutowired)
                     {
-                        var propBindingFlags = prop.GetBindingFlags();
+                        var propBindingFlags = prop.GetPropertyFlags();
                         var flagsCheck = false;
                         foreach (var flags in decorator.PropertyFlags)
                         {
@@ -66,7 +66,11 @@ namespace PropertyAutowired.Fody
                         else autoType.StaticProps.Add(autoProp);
                     }
                 }
-                if (autoType.HasAutowired) _autowiredTypes.Add(autoType);
+                if (autoType.HasAutowired)
+                {
+                    autoType.Sort();
+                    _autowiredTypes.Add(autoType);
+                }
             }
         }
     }

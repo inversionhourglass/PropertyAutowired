@@ -20,14 +20,14 @@ namespace TestUsingAssembly
         public int[] Arr { get; set; }
 
         [CtorAutowired("object", true, 'v', 1, 2, 3, 4, 5f, 6d, 7, 8, 9, "ctor", typeof(ILogable), TestEnum.B, "x", "y",
-            "z")]
+            "z", Position = PropertyAutowired.Position.EndOfConstructor)]
         public ILogger Logger1 { get; }
         //= (ILogger)new CtorAutowiredAttribute("object", true, 'v', 1, 2, 3, 4, 5f, 6d,
         //7, 8, 9, "ctor", typeof(ILogable), TestEnum.B, "x", "y", "z"){DeclaringType = typeof(WithAutowired)}.GetPropertyValue();
 
         [PropAutowired(Object = typeof(TestAutowiredAttribute), Bool = true, Char = 'o', Byte = 11, Short = 22,
             Int = 33, Long = 44, Float = 55f, Double = 66d, Ushort = 77, Uint = 88, Ulong = 99, String = "prop",
-            Type = typeof(PropertyAutowired.AutowiredAttribute), Enum = TestEnum.C, Array = new[] { "k", "m", "n" })]
+            Type = typeof(PropertyAutowired.AutowiredAttribute), Enum = TestEnum.C, Array = new[] { "k", "m", "n" }, Position = PropertyAutowired.Position.AfterDefaultInit)]
         public static ILogger Logger2 { get; }
         //= (ILogger)new PropAutowiredAttribute
         //{
