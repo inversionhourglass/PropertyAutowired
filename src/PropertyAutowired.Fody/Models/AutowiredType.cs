@@ -1,5 +1,7 @@
 ﻿using Mono.Cecil;
+using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace PropertyAutowired.Fody
 {
@@ -29,6 +31,21 @@ namespace PropertyAutowired.Fody
         {
             InstanceProps.Sort(this);
             StaticProps.Sort(this);
+        }
+
+        public void Log(Action<string> Log)
+        {
+            Log($"{TypeDef} sorted properties:");
+            Log("\tinstance properties:");
+            foreach (var prop in InstanceProps)
+            {
+                Log($"\t\t{prop.Order}. {prop.PropertyDef} autowired by {prop.Attribute.AttributeType} when {prop.Position}");
+            }
+            Log("\tstatic properties");
+            foreach (var prop in StaticProps)
+            {
+                Log($"\t\t{prop.Order}. {prop.PropertyDef} autowired by {prop.Attribute.AttributeType} when {prop.Position}");
+            }
         }
     }
 }

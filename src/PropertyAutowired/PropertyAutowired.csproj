@@ -5,7 +5,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId Condition="'$(Configuration)'!='Release'">PropertyAutowired</PackageId>
     <PackageId Condition="'$(Configuration)'=='Release'">PropertyAutowired.Fody</PackageId>
-    <Version>0.0.1</Version>
+    <Version>0.1.0</Version>
     <Authors>Hourglass Inversion</Authors>
     <Company>Hourglass Inversion</Company>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -15,6 +15,10 @@
     <PackageTags>Fody, ILWeaving, Cecil, PropertyAutowired, PropertyInitialize</PackageTags>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\PropertyAutowired.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+    <DocumentationFile>D:\Code\Hourglass\PropertyAutowired\src\PropertyAutowired\PropertyAutowired.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">

@@ -5,7 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\PropertyAutowired\PropertyAutowired.csproj" />
+    <PackageReference Include="PropertyAutowired.Fody" Version="0.0.9" Condition="'$(Configuration)'=='Release'" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\PropertyAutowired\PropertyAutowired.csproj" Condition="'$(Configuration)'!='Release'" />
   </ItemGroup>
 
 </Project>

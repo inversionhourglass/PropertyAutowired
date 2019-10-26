@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PropertyAutowired.Fody</name>
+    </assembly>
+    <members>
+        <member name="F:PropertyAutowired.Fody.AutowiredWays.Property">
+            <summary>
+            AutowiredAttribute
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.Fody.AutowiredWays.Typed">
+            <summary>
+            TypedAutowiredAttribute
+            </summary>
+        </member>
+        <member name="T:PropertyAutowired.Fody.Position">
+            <summary>
+            where to weave the code
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.Fody.Position.FirstOfAll">
+            <summary>
+            first of all
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.Fody.Position.AfterDefaultInit">
+            <summary>
+            equals with <see cref="F:PropertyAutowired.Fody.Position.EndOfConstructor"/> if apply to static constructor
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.Fody.Position.AfterBaseConstructor">
+            <summary>
+            equals with <see cref="F:PropertyAutowired.Fody.Position.EndOfConstructor"/> if apply to static constructor
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.Fody.Position.EndOfConstructor">
+            <summary>
+            before constructor return
+            </summary>
+        </member>
+        <member name="T:PropertyAutowired.Fody.PropFlags">
+            <summary>
+            Property BindingFlags
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.Fody.PropFlags.Default">
+            <summary>
+            Default
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.Fody.PropFlags.Instance">
+            <summary>
+            Instance
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.Fody.PropFlags.Static">
+            <summary>
+            Static
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.Fody.PropFlags.Public">
+            <summary>
+            Public
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.Fody.PropFlags.NonPublic">
+            <summary>
+            NonPublic
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.Fody.PropFlags.InstancePublic">
+            <summary>
+            InstancePublic
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.Fody.PropFlags.InstanceNonPublic">
+            <summary>
+            InstanceNonPublic
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.Fody.PropFlags.StaticPublic">
+            <summary>
+            StaticPublic
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.Fody.PropFlags.StaticNonPublic">
+            <summary>
+            StaticNonPublic
+            </summary>
+        </member>
+    </members>
+</doc>

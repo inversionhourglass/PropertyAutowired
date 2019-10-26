@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Fody;
+using System;
 
 namespace PropertyAutowired.Fody
 {
-    public class PropertyAutowiredException : Exception
+    public class PropertyAutowiredException : WeavingException
     {
         public PropertyAutowiredException(string message) : base(message) { }
     }

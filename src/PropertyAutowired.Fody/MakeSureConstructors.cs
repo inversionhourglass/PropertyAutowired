@@ -28,6 +28,7 @@ namespace PropertyAutowired.Fody
             ctor.Body.Instructions.Add(Instruction.Create(OpCodes.Call, methodReference));
             ctor.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
             typeDef.Methods.Add(ctor);
+            LogInfo($"generated empty instance constructor for {typeDef}");
             return ctor;
         }
 
@@ -37,7 +38,6 @@ namespace PropertyAutowired.Fody
             if (staticCtor == null)
             {
                 staticCtor = GenerateStaticCtor(typeDef);
-                typeDef.Methods.Add(staticCtor);
             }
 
             return staticCtor;
@@ -49,6 +49,8 @@ namespace PropertyAutowired.Fody
             var staticCtor = new MethodDefinition(".cctor", methodAttributes, TypeSystem.VoidReference);
             staticCtor.Body.Instructions.Add(Instruction.Create(OpCodes.Nop));
             staticCtor.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
+            typeDef.Methods.Add(staticCtor);
+            LogInfo($"generated empty static constructor for {typeDef}");
             return staticCtor;
         }
     }

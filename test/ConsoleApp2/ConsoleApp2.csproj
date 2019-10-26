@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -7,10 +7,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TestImplAssembly\TestImplAssembly.csproj" />
+    <ProjectReference Include="..\TestUsingAssembly\TestUsingAssembly.csproj" Condition="'$(Configuration)'=='Release'" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="TestUsingAssembly">
+    <Reference Include="TestUsingAssembly" Condition="'$(Configuration)'!='Release'">
       <HintPath>..\ConsoleApp1\bin\Debug\netcoreapp3.0\fodytemp\TestUsingAssembly.dll</HintPath>
     </Reference>
   </ItemGroup>

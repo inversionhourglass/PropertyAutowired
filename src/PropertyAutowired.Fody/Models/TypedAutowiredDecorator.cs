@@ -35,7 +35,7 @@ namespace PropertyAutowired.Fody
 
         public CustomAttribute Attribute { get; set; }
 
-        public PropFlags[] PropertyFlags { get; } = new[] { PropFlags.Public | PropFlags.Instance | PropFlags.Static };
+        public PropFlags[] PropertyFlags { get; } = new[] { PropFlags.Public };
 
         public string[] ExceptedDeclaringTypes { get; }
 

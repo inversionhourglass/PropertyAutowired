@@ -73,9 +73,9 @@ namespace PropertyAutowired.Fody
             var baseCtorIdx = ctor.Body.Instructions.FindIndex(0, ins => ins.Operand is MethodReference methodRef && methodRef.Name == ".ctor");
             var skipNopIdx = ctor.Body.Instructions.FindIndex(baseCtorIdx + 1, ins => ins.OpCode != OpCodes.Nop);
             baseCtorIdx--; // get ldarg.0 index
-            ctor.Body.Instructions.InsertRange(ctor.Body.Instructions.Count - 2, endOfConstructor);
-            ctor.Body.Instructions.InsertRange(skipNopIdx >= 0 ? skipNopIdx : ctor.Body.Instructions.Count - 2, afterBaseConstructor);
-            ctor.Body.Instructions.InsertRange(baseCtorIdx >= 0 ? baseCtorIdx : ctor.Body.Instructions.Count - 2, afterDefaultInit);
+            ctor.Body.Instructions.InsertRange(ctor.Body.Instructions.Count - 1, endOfConstructor);
+            ctor.Body.Instructions.InsertRange(skipNopIdx >= 0 ? skipNopIdx : ctor.Body.Instructions.Count - 1, afterBaseConstructor);
+            ctor.Body.Instructions.InsertRange(baseCtorIdx >= 0 ? baseCtorIdx : ctor.Body.Instructions.Count - 1, afterDefaultInit);
             ctor.Body.Instructions.InsertRange(0, firstOfAll);
         }
 

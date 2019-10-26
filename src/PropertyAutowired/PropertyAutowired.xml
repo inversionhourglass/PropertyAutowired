@@ -1,0 +1,218 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PropertyAutowired</name>
+    </assembly>
+    <members>
+        <member name="T:PropertyAutowired.AbstractAutowiredAttribute">
+            <summary>
+            for common properties, don't inherit from this class
+            </summary>
+        </member>
+        <member name="P:PropertyAutowired.AbstractAutowiredAttribute.DeclaringType">
+            <summary>
+            The type which declared property.(value is set by framework at compile time)
+            </summary>
+        </member>
+        <member name="P:PropertyAutowired.AbstractAutowiredAttribute.Order">
+            <summary>
+            Properties initialize order
+            </summary>
+        </member>
+        <member name="P:PropertyAutowired.AbstractAutowiredAttribute.Position">
+            <summary>
+            property initialize position or timing
+            </summary>
+        </member>
+        <member name="M:PropertyAutowired.AbstractAutowiredAttribute.GetPropertyValue">
+            <summary>
+            return a value for the property
+            </summary>
+        </member>
+        <member name="T:PropertyAutowired.AutowiredAttribute">
+            <summary>
+            Single property autowired
+            </summary>
+        </member>
+        <member name="T:PropertyAutowired.FlagsHelper">
+            <summary>
+            for note, can not using when tag a attribute
+            </summary>
+        </member>
+        <member name="P:PropertyAutowired.FlagsHelper.All">
+            <summary>
+            All Property
+            </summary>
+        </member>
+        <member name="P:PropertyAutowired.FlagsHelper.Public">
+            <summary>
+            Public properties, whatever static or instance
+            </summary>
+        </member>
+        <member name="P:PropertyAutowired.FlagsHelper.NonPublic">
+            <summary>
+            NonPublic properties, whatever static or instance
+            </summary>
+        </member>
+        <member name="P:PropertyAutowired.FlagsHelper.Instance">
+            <summary>
+            Instance properties, whatever public or nonpublic
+            </summary>
+        </member>
+        <member name="P:PropertyAutowired.FlagsHelper.Static">
+            <summary>
+            Static properties, whatever public or nonpublic
+            </summary>
+        </member>
+        <member name="P:PropertyAutowired.FlagsHelper.InstancePublic">
+            <summary>
+            Public instance properties
+            </summary>
+        </member>
+        <member name="P:PropertyAutowired.FlagsHelper.InstanceNonPublic">
+            <summary>
+            NonPublic instance properties
+            </summary>
+        </member>
+        <member name="P:PropertyAutowired.FlagsHelper.StaticPublic">
+            <summary>
+            Public static properties
+            </summary>
+        </member>
+        <member name="P:PropertyAutowired.FlagsHelper.StaticNonPublic">
+            <summary>
+            NonPublic static properties
+            </summary>
+        </member>
+        <member name="P:PropertyAutowired.FlagsHelper.InstancePublicAndStaticNonPublic">
+            <summary>
+            Public instance properties and nonPublic static properties
+            </summary>
+        </member>
+        <member name="P:PropertyAutowired.FlagsHelper.InstanceNonPublicAndStaticPublic">
+            <summary>
+            NonPublic instance properties and public static properties
+            </summary>
+        </member>
+        <member name="P:PropertyAutowired.FlagsHelper.PublicAndInstance">
+            <summary>
+            Except nonPublic static properties
+            </summary>
+        </member>
+        <member name="P:PropertyAutowired.FlagsHelper.PublicAndStatic">
+            <summary>
+            Except nonPublic instance properties
+            </summary>
+        </member>
+        <member name="P:PropertyAutowired.FlagsHelper.NonPublicAndInstance">
+            <summary>
+            Except public static properties
+            </summary>
+        </member>
+        <member name="P:PropertyAutowired.FlagsHelper.NonPublicAndStatic">
+            <summary>
+            Except public instance properties
+            </summary>
+        </member>
+        <member name="T:PropertyAutowired.IgnoreAutowiredAttribute">
+            <summary>
+            Invalid for AutowiredAttribute
+            </summary>
+        </member>
+        <member name="T:PropertyAutowired.Position">
+            <summary>
+            where to weave the code
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.Position.FirstOfAll">
+            <summary>
+            first of all
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.Position.AfterDefaultInit">
+            <summary>
+            equals with <see cref="F:PropertyAutowired.Position.EndOfConstructor"/> if apply to static constructor
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.Position.AfterBaseConstructor">
+            <summary>
+            equals with <see cref="F:PropertyAutowired.Position.EndOfConstructor"/> if apply to static constructor
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.Position.EndOfConstructor">
+            <summary>
+            before constructor return
+            </summary>
+        </member>
+        <member name="T:PropertyAutowired.PropFlags">
+            <summary>
+            Property BindingFlags
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.PropFlags.Default">
+            <summary>
+            Default
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.PropFlags.Instance">
+            <summary>
+            Instance
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.PropFlags.Static">
+            <summary>
+            Static
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.PropFlags.Public">
+            <summary>
+            Public
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.PropFlags.NonPublic">
+            <summary>
+            NonPublic
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.PropFlags.InstancePublic">
+            <summary>
+            InstancePublic
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.PropFlags.InstanceNonPublic">
+            <summary>
+            InstanceNonPublic
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.PropFlags.StaticPublic">
+            <summary>
+            StaticPublic
+            </summary>
+        </member>
+        <member name="F:PropertyAutowired.PropFlags.StaticNonPublic">
+            <summary>
+            StaticNonPublic
+            </summary>
+        </member>
+        <member name="T:PropertyAutowired.TypedAutowiredAttribute">
+            <summary>
+            Declare the property types that need to be autowired by <see cref="P:PropertyAutowired.TypedAutowiredAttribute.TargetPropertyTypes"/>
+            </summary>
+        </member>
+        <member name="P:PropertyAutowired.TypedAutowiredAttribute.PropertyFlags">
+            <summary>
+            (one of the ProFlags array) &amp; property.BindingFlags == property.BindingFlags
+            </summary>
+        </member>
+        <member name="P:PropertyAutowired.TypedAutowiredAttribute.ExceptedDeclaringTypes">
+            <summary>
+            excepted declaring types.(optional)
+            </summary>
+        </member>
+        <member name="P:PropertyAutowired.TypedAutowiredAttribute.TargetPropertyTypes">
+            <summary>
+            Property types. the property type have to equals one of type array, not support subclass.
+            </summary>
+        </member>
+    </members>
+</doc>

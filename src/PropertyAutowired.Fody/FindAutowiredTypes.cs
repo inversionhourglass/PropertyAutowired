@@ -14,13 +14,12 @@ namespace PropertyAutowired.Fody
             foreach (var attr in attrs)
             {
                 if (!attr.AttributeType.DerivesFrom(Consts.TypedAutowiredAttribute)) continue;
-                // todo: log
                 if (!attr.HasProperties) continue;
                 var decorator = new TypedAutowiredDecorator(attr);
+                LogInfo($"TypedAutowiredAttribute found: {attr.AttributeType.FullName}");
                 if (!autowiredTypes.AddRangeUnique(decorator.TargetPropertyTypes, t => new KeyValuePair<string, TypedAutowiredDecorator>(t, decorator), out var duplicateType))
                     throw new PropertyAutowiredException($"duplicate {Consts.TypedAutowiredAttribute}.{Consts.TypedAutowiredAttribute_TargetPropertyTypes} found: {duplicateType}");
             }
-            // todo: 支持array以及泛型
             foreach (var type in ModuleDefinition.Types)
             {
                 if (!type.IsClass || type.IsValueType || type.IsDelegate()) continue;
@@ -38,7 +37,7 @@ namespace PropertyAutowired.Fody
                         var flagsCheck = false;
                         foreach (var flags in decorator.PropertyFlags)
                         {
-                            flagsCheck |= (propBindingFlags & flags) == propBindingFlags;
+                            flagsCheck |= (propBindingFlags & flags) == flags;
                             if (flagsCheck) break;
                         }
                         isTypedAutowired &= flagsCheck;
@@ -62,13 +61,20 @@ namespace PropertyAutowired.Fody
                     if (ways.HasValue)
                     {
                         var autoProp = new AutowiredProperties(prop, autoAttr ?? decorator.Attribute, ways.Value);
-                        if (prop.HasThis) autoType.InstanceProps.Add(autoProp);
-                        else autoType.StaticProps.Add(autoProp);
+                        if (prop.HasThis)
+                        {
+                            autoType.InstanceProps.Add(autoProp);
+                        }
+                        else
+                        {
+                            autoType.StaticProps.Add(autoProp);
+                        }
                     }
                 }
                 if (autoType.HasAutowired)
                 {
                     autoType.Sort();
+                    autoType.Log(LogInfo);
                     _autowiredTypes.Add(autoType);
                 }
             }
